@@ -1,0 +1,1 @@
+data/shakespeare_char/input_cleaned.txt filter=lfs diff=lfs merge=lfs -text
