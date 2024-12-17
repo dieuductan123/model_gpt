@@ -8,17 +8,28 @@ import os
 import pickle
 import requests
 import numpy as np
+from datasets import load_dataset
+
+# Tải dữ liệu từ Hugging Face
+dataset = load_dataset("truongpdd/vietnamese_poetry")
+
+# Chọn dữ liệu từ phần 'train' hoặc 'validation'
+data = dataset['train']['text'] 
+
+# Chuyển đổi danh sách các bài thơ thành một chuỗi duy nhất
+data_text = "\n".join(data)
+
 
 # download the tiny shakespeare dataset
 input_file_path = os.path.join(os.path.dirname(__file__), 'input.txt')
 if not os.path.exists(input_file_path):
-    data_url = 'https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt'
-    with open(input_file_path, 'w') as f:
-        f.write(requests.get(data_url).text)
+    # data_url = 'https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt'
+    with open(input_file_path, 'w', encoding = 'utf-8') as f:
+        f.write(data_text)
 
-with open(input_file_path, 'r') as f:
-    data = f.read()
-print(f"length of dataset in characters: {len(data):,}")
+# with open(input_file_path, 'r') as f:
+#     data = f.read()
+print(f"length of dataset in characters: {len(data_text):,}")
 
 # get all the unique characters that occur in this text
 chars = sorted(list(set(data)))
